@@ -1,2 +1,0 @@
-# projetoderansonware
-Curso de CiberSecurity
